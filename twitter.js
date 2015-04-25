@@ -56,8 +56,8 @@ function sendSMS (msg) {
   isBusy = true;
 
   twilio.sms.messages.create({
-    to: config.num_to_text,
-    from: config.twilio_num,
+    to: credentials.num_to_text,
+    from: credentials.twilio_num,
     body: msg
   }, function(error, message) {
     if (!error) {
