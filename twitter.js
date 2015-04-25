@@ -29,7 +29,7 @@ function startStream (conn) {
 	 		//console.log(tweetObject);
 			 //io.emit('tweet', tweetObject);
             //sendSMS(tweet.text);
-            sendNotification(tweet.text);
+            sendNotification(tweet.user.screen_name, tweet.text);
 
 		});
 
@@ -43,9 +43,9 @@ function startStream (conn) {
 	});
 }
 
-function sendNotification (txt) {
+function sendNotification (usr, txt) {
   // pushbullet
-  pusher.note(credentials.pushbullet_device_id_iphone, "Tweet gefunden", txt, function(error, response) {
+  pusher.note(credentials.pushbullet_device_id_iphone, usr, txt, function(error, response) {
     // response is the JSON response from the API
     console.log("pusher.note: " + response);
   });
