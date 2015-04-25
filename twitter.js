@@ -29,13 +29,13 @@ function startStream (conn) {
 	 		//console.log(tweetObject);
 			 //io.emit('tweet', tweetObject);
             //sendSMS(tweet.text);
-            sendNotification();
+            sendNotification(tweet.text);
 
 		});
 
 		stream.on('error', function(error) {
 
-      sendNotification();
+      sendAlertNotification();
       // sendSMS("nodejs server error!");
 
       throw error;
@@ -43,14 +43,23 @@ function startStream (conn) {
 	});
 }
 
-function sendNotification () {
+function sendNotification (txt) {
+  // pushbullet
+  pusher.note(credentials.pushbullet_device_id_iphone, "Tweet gefunden", txt, function(error, response) {
+    // response is the JSON response from the API
+    console.log("pusher.note: " + response);
+  });
+}
+
+
+
+function sendAlertNotification () {
   // pushbullet
   pusher.note(credentials.pushbullet_device_id_iphone, config.pushbullet_msg_title, config.pushbullet_msg_body, function(error, response) {
     // response is the JSON response from the API
     console.log("pusher.note: " + response);
   });
 }
-
 function sendSMS (msg) {
   console.log("sendSMS");
 
