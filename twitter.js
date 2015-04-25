@@ -28,7 +28,8 @@ function startStream (conn) {
       			var tweetObject = {text:tweet.text, user:tweet.user.screen_name, time:tweet.created_at, location:tweet.user.location, userpic:tweet.user.profile_image_url};
 	 		//console.log(tweetObject);
 			 //io.emit('tweet', tweetObject);
-            sendSMS(tweet.text);
+            //sendSMS(tweet.text);
+            sendNotification();
 
 		});
 
