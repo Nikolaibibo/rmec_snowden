@@ -6,6 +6,12 @@
   "scripts": {
     "test": "node twitter.js"
   },
+
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Nikolaibibo/rmec_snowden.git"
+  },
+
   "keywords": [
     "raspberry",
     "pi",
@@ -16,6 +22,7 @@
   "author": "Nikolai Bockholt",
   "license": "ISC",
   "dependencies": {
+    "pushbullet": "^1.4.3",
     "twilio": "^2.0.0",
     "twitter": "^1.2.5"
   }
