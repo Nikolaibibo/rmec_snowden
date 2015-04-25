@@ -1,0 +1,22 @@
+{
+  "name": "twitterapi",
+  "version": "1.0.0",
+  "description": "Check the twitter api stream for javascript",
+  "main": "twitter.js",
+  "scripts": {
+    "test": "node twitter.js"
+  },
+  "keywords": [
+    "raspberry",
+    "pi",
+    "node",
+    "twitter",
+    "api"
+  ],
+  "author": "Nikolai Bockholt",
+  "license": "ISC",
+  "dependencies": {
+    "twilio": "^2.0.0",
+    "twitter": "^1.2.5"
+  }
+}
