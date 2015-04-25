@@ -16,7 +16,7 @@ var client = new Twitter({
 var pusher = new PushBullet(credentials.pushbullet_key);
 
 var isBusy = false;
-var searchTerm = "palimpalim";
+var searchTerm = "nodejs";
 
 function startStream (conn) {
 
