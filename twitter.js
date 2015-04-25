@@ -55,7 +55,7 @@ function sendNotification (txt) {
 
 function sendAlertNotification () {
   // pushbullet
-  pusher.note(credentials.pushbullet_device_id_iphone, config.pushbullet_msg_title, config.pushbullet_msg_body, function(error, response) {
+  pusher.note(credentials.pushbullet_device_id_macbook, config.pushbullet_msg_title, config.pushbullet_msg_body, function(error, response) {
     // response is the JSON response from the API
     console.log("pusher.note: " + response);
   });
