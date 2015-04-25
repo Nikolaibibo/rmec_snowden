@@ -3,6 +3,8 @@ var PushBullet = require('pushbullet');
 
 var config = require('./config.json');
 
+var twilio = require('twilio')(config.account_sid, config.auth_token);
+
 var client = new Twitter({
   consumer_key: config.twitter_consumer_key,
   consumer_secret: config.twitter_consumer_secret,
@@ -12,7 +14,7 @@ var client = new Twitter({
 
 var pusher = new PushBullet(config.pushbullet_key);
 
-
+var isBusy = false;
 var searchTerm = "javascript";
 
 function startStream (conn) {
@@ -29,19 +31,48 @@ function startStream (conn) {
 		});
 
 		stream.on('error', function(error) {
+
       sendNotification();
-			throw error;
+      // sendSMS("nodejs server error!");
+
+      throw error;
   		});
 	});
 }
 
 function sendNotification () {
+  // pushbullet
   pusher.note(config.pushbullet_device_id_iphone, config.pushbullet_msg_title, config.pushbullet_msg_title, function(error, response) {
     // response is the JSON response from the API
     console.log("pusher.note: " + response);
-});
-
-
+  });
 }
+
+function sendSMS (msg) {
+  console.log("sendSMS");
+
+  isBusy = true;
+
+  twilio.sms.messages.create({
+    to: config.num_to_text,
+    from: config.twilio_num,
+    body: msg
+  }, function(error, message) {
+    if (!error) {
+      console.log('Success! The SID for this SMS message is:');
+      console.log(message.sid);
+      console.log('Message sent on:');
+      console.log(message.dateCreated);
+
+      setTimeout(resetStatus, 10000);
+    }
+  });
+}
+
+function resetStatus () {
+  console.log("resetStatus");
+  isBusy = false;
+}
+
 
 startStream();
