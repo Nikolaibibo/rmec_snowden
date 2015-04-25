@@ -2,20 +2,21 @@ var Twitter = require('twitter');
 var PushBullet = require('pushbullet');
 
 var config = require('./config.json');
+var credentials = require('./credentials.json');
 
 var twilio = require('twilio')(config.account_sid, config.auth_token);
 
 var client = new Twitter({
-  consumer_key: config.twitter_consumer_key,
-  consumer_secret: config.twitter_consumer_secret,
-  access_token_key: config.twitter_access_token_key,
-  access_token_secret: config.twitter_access_token_secret
+  consumer_key: credentials.twitter_consumer_key,
+  consumer_secret: credentials.twitter_consumer_secret,
+  access_token_key: credentials.twitter_access_token_key,
+  access_token_secret: credentials.twitter_access_token_secret
 });
 
-var pusher = new PushBullet(config.pushbullet_key);
+var pusher = new PushBullet(credentials.pushbullet_key);
 
 var isBusy = false;
-var searchTerm = "javascript";
+var searchTerm = "palimpalim";
 
 function startStream (conn) {
 
@@ -27,6 +28,7 @@ function startStream (conn) {
       			var tweetObject = {text:tweet.text, user:tweet.user.screen_name, time:tweet.created_at, location:tweet.user.location, userpic:tweet.user.profile_image_url};
 	 		//console.log(tweetObject);
 			 //io.emit('tweet', tweetObject);
+            sendSMS(tweet.text);
 
 		});
 
@@ -42,7 +44,7 @@ function startStream (conn) {
 
 function sendNotification () {
   // pushbullet
-  pusher.note(config.pushbullet_device_id_iphone, config.pushbullet_msg_title, config.pushbullet_msg_title, function(error, response) {
+  pusher.note(credentials.pushbullet_device_id_iphone, config.pushbullet_msg_title, config.pushbullet_msg_body, function(error, response) {
     // response is the JSON response from the API
     console.log("pusher.note: " + response);
   });

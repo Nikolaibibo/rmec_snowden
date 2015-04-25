@@ -2,4 +2,4 @@
 *.o
 
 # secrets
-config.json
+credentials.json
