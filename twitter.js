@@ -4,7 +4,7 @@ var PushBullet = require('pushbullet');
 var config = require('./config.json');
 var credentials = require('./credentials.json');
 
-var twilio = require('twilio')(config.account_sid, config.auth_token);
+var twilio = require('twilio')(credentials.account_sid, credentials.auth_token);
 
 var client = new Twitter({
   consumer_key: credentials.twitter_consumer_key,
