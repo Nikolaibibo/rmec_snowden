@@ -1,5 +1,8 @@
 var Twitter = require('twitter');
 var PushBullet = require('pushbullet');
+var pfio = require('piface-node');
+
+pfio.init();
 
 // config for strings, credentials for twitter, twilio and pushbullet git ignored
 var config = require('./config.json');
@@ -24,6 +27,15 @@ var waittime = 10000;
 // hastag/searchterm for API
 var searchTerm = "nodejs";
 
+
+function powerUp () {
+  pfio.digital_write(0,1);
+}
+
+function powerDown () {
+  pfio.digital_write(0,0);
+}
+
 // start reading stream
 function startStream (conn) {
 
@@ -35,6 +47,11 @@ function startStream (conn) {
       			var tweetObject = {text:tweet.text, user:tweet.user.screen_name, time:tweet.created_at, location:tweet.user.location, userpic:tweet.user.profile_image_url};
 	 		      //sendSMS(tweet.text);
             sendNotification(tweet.user.screen_name, tweet.text);
+
+            powerUp();
+
+            setTimeout(powerDown, 3000);
+
 		});
 
 		stream.on('error', function(error) {
