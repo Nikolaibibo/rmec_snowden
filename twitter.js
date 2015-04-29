@@ -22,6 +22,7 @@ var pusher = new PushBullet(credentials.pushbullet_key);
 // var for not sending too much sms - by now with bad setTimeout
 // TODO: change for performance
 var isBusy = false;
+var isPowered = false;
 var waittime = 10000;
 
 // hastag/searchterm for API
@@ -29,10 +30,12 @@ var searchTerm = "nodejs";
 
 
 function powerUp () {
+  isPowered = true;
   pfio.digital_write(0,1);
 }
 
 function powerDown () {
+  isPowered = false;
   pfio.digital_write(0,0);
 }
 
@@ -48,7 +51,7 @@ function startStream (conn) {
 	 		      //sendSMS(tweet.text);
             sendNotification(tweet.user.screen_name, tweet.text);
 
-            powerUp();
+            if (!isPowered) powerUp();
 
             setTimeout(powerDown, 3000);
 
