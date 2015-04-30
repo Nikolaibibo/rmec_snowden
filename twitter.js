@@ -47,10 +47,10 @@ function startStream (conn) {
 
  	client.stream('statuses/filter', {track:searchTerm}, function(stream) {
     		stream.on('data', function(tweet) {
-      			console.log("@" + tweet.user.screen_name + " tweeted: " + tweet.text);
-      			var tweetObject = {text:tweet.text, user:tweet.user.screen_name, time:tweet.created_at, location:tweet.user.location, userpic:tweet.user.profile_image_url};
+      			console.log("@" + tweet.user.screen_name + " :::: " + tweet.text + "  ::::  " + tweet.created_at);
+      			//var tweetObject = {text:tweet.text, user:tweet.user.screen_name, time:tweet.created_at, location:tweet.user.location, userpic:tweet.user.profile_image_url};
 	 		      //sendSMS(tweet.text);
-            sendNotification(tweet.user.screen_name, tweet.text);
+            //sendNotification(tweet.user.screen_name, tweet.text);
 
             if (!isPowered) powerUp();
 
